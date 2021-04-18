@@ -32,3 +32,76 @@ variable "project_id" {
  default = "<PROJECT ID>"
 }
 ```
+- Tambahkan script berikut ke dalam file __main.tf__
+``` yaml 
+ terraform {
+  required_providers {
+    google = {
+      source = "hashicorp/google"
+      version = "3.55.0"
+    }
+  }
+}
+
+provider "google" {
+  project     = var.project_id
+  region      = var.region
+  zone        = var.zone
+}
+
+module "instances" {
+  source     = "./modules/instances"
+}
+```
+Jalankan <code>terraform init</code> di Cloud Shell dalam folder root terraform yang tadi sudah kita buat
+
+### Task 2 : Import infrastructure
+Silahkan buka file __modules/instances/instances.tf__ lalu tambahkan script di bawah ini
+``` yaml
+resource "google_compute_instance" "tf-instance-1" {
+  name         = "tf-instance-1"
+  machine_type = "n1-standard-1"
+  zone         = var.zone
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+    }
+  }
+
+  network_interface {
+ network = "default"
+  }
+}
+
+resource "google_compute_instance" "tf-instance-2" {
+  name         = "tf-instance-2"
+  machine_type = "n1-standard-1"
+  zone         = var.zone
+
+  boot_disk {
+    initialize_params {
+      image = "debian-cloud/debian-10"
+    }
+  }
+
+  network_interface {
+ network = "default"
+  }
+}
+```
+Untuk __Instance ke-1__
+Selanjutnya buka navigasi menu ke __Compute Engine > VM Instances__ klik __tf-instance-1__ copy Instance ID yang berada di bawah scroll sedikit. Lalu jalankan perintah berikut ini dengan Cloud Shell untuk melakukan import, ganti __<INSTANCE-ID>__ dengan Instance ID tadi
+ ``` yaml
+ terraform import module.instances.google_compute_instance.tf-instance-1 <INSTANCE-ID>
+ ```
+Untuk __Instance ke-2__
+Selanjutnya buka navigasi menu ke __Compute Engine > VM Instances__ klik __tf-instance-2__ copy Instance ID yang berada di bawah scroll sedikit. Lalu jalankan perintah berikut ini dengan Cloud Shell untuk melakukan import, ganti __<INSTANCE-ID>__ dengan Instance ID tadi
+ ``` yaml
+ terraform import module.instances.google_compute_instance.tf-instance-2 <INSTANCE-ID>
+ ```
+Kedua contoh tersebut sekarang telah diimpor ke konfigurasi terraform Anda. Anda sekarang dapat secara opsional menjalankan perintah untuk memperbarui status Terraform. Ketik <code>yes</code> pada dialog setelah Anda menjalankan perintah agar perubahan status dapat diterima.
+ ``` yaml
+ terraform plan
+ terraform apply
+ ```
