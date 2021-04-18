@@ -1,0 +1,53 @@
+    1  gcloud auth list
+    2  pwd
+    3  mkdir terraform
+    4  cd terraform/
+    5  touch main.tf
+    6  touch variables.tf
+    7  mkdir modules
+    8  cd modules/
+    9  mkdir instances
+   10  cd instances/
+   11  touch instances.tf outputs.tf variables.tf
+   12  ll
+   13  cd ..
+   14  mkdir storage
+   15  cd storage/
+   16  touch storage.tf outputs.tf variables.tf
+   17  ll
+   18  cd ..
+   19  terraform init
+   20  terraform import module.instances.google_compute_instance.tf-instance-1 6728976234221531216
+   21  terraform import module.instances.google_compute_instance.tf-instance-2 146939746454728784
+   22  terraform plan
+   23  terraform apply
+   24  terraform init
+   25  terraform apply
+   26  terraform init
+   27  terraform apply
+   28  terraform init
+   29  terraform apply
+   30  terraform taint module.instances.google_compute_instance.tf-instance-3
+   31  terraform init
+   32  terraform apply
+   33  terraform init
+   34  terraform apply
+   35  terraform init
+   36  terraform apply
+   37  terraform init
+   38  terraform apply
+   39  ll
+   40  git init
+   41  git add .
+   42  git commit -m "tantangan selesai"
+   43  git config --global user.email "yudifaturohman198@gmail.com"
+   44  git config --global user.name "Yudi Faturohman"
+   45  git commit -m "tantangan selesai"
+   46  git remote add origin https://github.com/yudifaturohman/GCP-AutomatingInfrastructureOnGoogleCloudWithTerraformChallengeLab.git
+   47  git push origin master
+   48  rm -rf terraform.tfstate terraform.tfstate.backup 
+   49  ll
+   50  git add .
+   51  git commit -m "mengahapus yang tidak di perlukan"
+   52  git push origin master
+   53  history > history_for_print.txt
