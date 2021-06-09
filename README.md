@@ -136,7 +136,7 @@ Selanjutnya silahkan lakukan replace kode dengan blok script sebagai berikut lal
   } 
   required_providers { 
     google = { 
-      source = "hashicorp / google" 
+      source = "hashicorp/google" 
       version = "3.55.0" 
     } 
   } 
@@ -243,7 +243,6 @@ Silahkan tambahkan potongan script berikut ke dalam file __main.tf__ untuk membu
 ``` yaml
 module "vpc" {
     source  = "terraform-google-modules/network/google"
-    version = "~> 2.5.0"
 
     project_id   = var.project_id
     network_name = "terraform-vpc"
